@@ -1,11 +1,20 @@
-class DashboardPage {
-    constructor(page) {
+import test from "node:test";
+import { Page, Locator } from '@playwright/test'
+
+export class DashboardPage {
+    
+    products: Locator;
+    productsText: Locator;
+    cart: Locator;
+
+
+    constructor( page: Page ) {
         this.products = page.locator('.card-body');
         this.productsText = page.locator('.card-body b');
-        this.cart = page.locator("[routerlink*='cart']");
+        this.cart = page.locator("[routerlink*='cart']")
     }
 
-    async searchProductAddCart(productName) {
+    async searchProductAddCart(productName: string) {
 
         const Titles = await this.productsText.allTextContents();
         console.log(Titles);

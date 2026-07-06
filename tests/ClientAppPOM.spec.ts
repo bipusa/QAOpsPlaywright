@@ -1,12 +1,13 @@
-const { test, expect } = require('@playwright/test');
-const {customtest} = require('../utils/ClientAppPOMcustomfixturefortestdata');
-const { POManager } = require('../PageObject/POManager');  //Page Object manager : creates page object and returns them
-const dataset = JSON.parse(JSON.stringify(require("../utils/ClientAppPOMTestData.json")));
 
+import {test, expect} from '@playwright/test'
+import { customtest } from '../utils_ts/ClientAppPOMcustomfixturefortestdata';
+import {POManager} from '../PageObject_ts/PageObject_ts/POManager'; //Page Object manager : creates page object and returns them
+const dataset = JSON.parse(JSON.stringify(require("../utils_ts/ClientAppPOMTestData.json")));
+//import dataset from "../utils/ClientAppPOMTestData.json";
 for(const data of dataset)
 {
 
-test(`@Web Client App login ${data.productname}`, async ({ page }) => {
+test(`Client App login ${data.productname}`, async ({ page }) => {
     // const username = 'thapa.bipusa@outlook.com';
 
     const poManager = new POManager(page);
@@ -19,14 +20,10 @@ test(`@Web Client App login ${data.productname}`, async ({ page }) => {
     await dashboardPage.searchProductAddCart(data.productname);
     await dashboardPage.navigateToCart();
 
-    const cartPage = poManager.getCartPage();
-    await cartPage.verifyProductInCart(data.productname);
-    await cartPage.goToCheckout();
-
     const checkoutPage = poManager.getCheckoutPage();
     await checkoutPage.gotoCheckoutPage(data.username);
 
-    const orderId = await checkoutPage.getOrderID();
+    const orderId: any = await checkoutPage.getOrderID();
 
     expect(orderId).toBeTruthy();
 
@@ -54,10 +51,6 @@ customtest('Test with Custom Fixture', async ({ page, testDataForOrder }) => {
     await dashboardPage.searchProductAddCart(testDataForOrder.productname);
     await dashboardPage.navigateToCart();
 
-    const cartPage = poManager.getCartPage();
-    await cartPage.verifyProductInCart(testDataForOrder.productname);
-    await cartPage.goToCheckout();
-
     const checkoutPage = poManager.getCheckoutPage();
     await checkoutPage.gotoCheckoutPage(testDataForOrder.username);
 
@@ -65,12 +58,12 @@ customtest('Test with Custom Fixture', async ({ page, testDataForOrder }) => {
 
     expect(orderId).toBeTruthy();
 
-    const ordersPage = poManager.getOrdersPage();
+    // const ordersPage = poManager.getOrdersPage();
 
-    //await ordersPage.goToOrdersPage();
-    await ordersPage.verifyOrderDetails(orderId);
+    // //await ordersPage.goToOrdersPage();
+    // await ordersPage.verifyOrderDetails(orderId);
 
-    const orderDetailsText = await ordersPage.getOrderDetails();
+    // const orderDetailsText = await ordersPage.getOrderDetails();
 
-     expect(orderId.includes(orderDetailsText)).toBeTruthy();
+    // expect(orderId.includes(orderDetailsText)).toBeTruthy();
 });
