@@ -13,6 +13,7 @@ test('Calendar Validation', async({page}) => {
     await page.locator('.react-calendar__navigation__label__labelText.react-calendar__navigation__label__labelText--from').click();
     await page.getByText(Year).click();
     await page.locator('.react-calendar__year-view__months__month').nth(Number(MonthNumber -1)).click();
+    //calendar spec
     await page.locator(`//abbr[text()='${Date}']`).click();
     const inputs =  page.locator('.react-date-picker__inputGroup__input');
  

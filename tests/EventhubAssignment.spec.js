@@ -26,7 +26,7 @@ test('Eventhub Assignment', async({page}) => {
     await page.getByPlaceholder('0.00').fill('21.00');
     await page.getByText('Total Seats').fill('10');
     await page.locator('#add-event-btn').click();
-    await page.pause();
+    //await page.pause();
 
 
 

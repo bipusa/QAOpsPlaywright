@@ -8,7 +8,7 @@ test("@Web Popup validations", async({page}) => {
     await expect(page.locator('#displayed-text')).toBeVisible();
     await page.locator('#hide-textbox').click();
     await expect(page.locator('#displayed-text')).toBeHidden();
-    await page.pause();
+    //await page.pause();
     await page.locator('#confirmbtn').click();
     await page.on('dialog', dialog => dialog.accept());   //java popup i.e. when there is no html or css locator for the popup events
     await page.locator('#mousehover').hover();
